@@ -6,78 +6,20 @@ services:
       context: .
       dockerfile: jmeter.dockerfile
     volumes:
-      - ./jmetr_data:/app/jmeter_scripts
+      - ./jmeter_data:/app/jmeter_scripts
     networks:
       - network
     command: ["jmeter", "-n", "-t", "/app/jmeter_scripts/test.jmx", "-l", "/app/jmeter_scripts/test_results.jtl"]
 
-  mock_server1:
-    image: sct/mock
+  server:
     build:
       context: .
       dockerfile: mock.dockerfile
     ports:
-      - "8001:8001"
+      - "8000:8000"
     environment:
-      - MOCK_API_HOST=${MOCK_API_HOST:-0.0.0.0}
-      - MOCK_API_PORT=8001
-      - MOCK_SERVER_NUMBER=1
-    networks:
-      - network
-
-  mock_server2:
-    image: sct/mock
-    build:
-      context: .
-      dockerfile: mock.dockerfile
-    ports:
-      - "8002:8002"
-    environment:
-      - MOCK_API_HOST=${MOCK_API_HOST:-0.0.0.0}
-      - MOCK_API_PORT=8002
-      - MOCK_SERVER_NUMBER=2
-    networks:
-      - network
-
-  mock_server3:
-    image: sct/mock
-    build:
-      context: .
-      dockerfile: mock.dockerfile
-    ports:
-      - "8003:8003"
-    environment:
-      - MOCK_API_HOST=${MOCK_API_HOST:-0.0.0.0}
-      - MOCK_API_PORT=8003
-      - MOCK_SERVER_NUMBER=3
-    networks:
-      - network
-
-  mock_server4:
-    image: sct/mock
-    build:
-      context: .
-      dockerfile: mock.dockerfile
-    ports:
-      - "8004:8004"
-    environment:
-      - MOCK_API_HOST=${MOCK_API_HOST:-0.0.0.0}
-      - MOCK_API_PORT=8004
-      - MOCK_SERVER_NUMBER=4
-    networks:
-      - network
-
-  mock_server5:
-    image: sct/mock
-    build:
-      context: .
-      dockerfile: mock.dockerfile
-    ports:
-      - "8005:8005"
-    environment:
-      - MOCK_API_HOST=${MOCK_API_HOST:-0.0.0.0}
-      - MOCK_API_PORT=8005
-      - MOCK_SERVER_NUMBER=5
+      - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
+      - SERVER_PORT=8000
     networks:
       - network
 
